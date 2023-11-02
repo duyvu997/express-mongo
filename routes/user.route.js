@@ -1,10 +1,22 @@
 import Router from 'express-promise-router';
-import userController from '../controllers/user-controller';
 import { authenticate } from '../middlewares/authentication';
+import { checkRoles } from '../middlewares/authorization';
 
 const router = new Router();
+router.get('/me', authenticate, checkRoles(['admin']), (req, res) => {
+    // Handle request
+    return res.json({
+        ok: true,
+        user: '222',
+      })
+  });
+router.get('/', (req, res) => {
+    // Handle request
+    return res.json({
+        ok: true,
+        user: '22121222',
+      })
+});
 
-router.get('/', userController.getUsers);
-router.get('/me', authenticate, userController.getMe);
 
 export default router;
